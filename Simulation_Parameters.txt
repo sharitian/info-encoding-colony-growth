@@ -1,8 +1,0 @@
-r0: 5
-spacing: 10
-seeding: 1
-kernel: 1
-shape: 1
-scale: 1
-bit: 6
-crop: 1
