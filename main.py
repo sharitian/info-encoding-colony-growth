@@ -13,11 +13,11 @@ app.secret_key = "secret key"
 @app.route("/", methods = ["GET", "POST"])
 def home():
 	if request.method == "POST":
-		print(request.form["radius"])
-		print(request.form["spacing"])
-		print(request.form["d1d2"])
-		print(request.form["b"])
-		print(request.form["growth"])
+		#print(request.form["radius"])
+		#print(request.form["spacing"])
+		#print(request.form["d1d2"])
+		#print(request.form["b"])
+		#print(request.form["growth"])
 
 		if os.path.isdir("./final"):
 			shutil.rmtree(os.getcwd() + "/final")
@@ -40,24 +40,29 @@ def home():
 		session["b"] = request.form["b"]
 		session["growth"] = request.form["growth"]
 
-		return redirect(url_for("command_server", command = command_server))
+		return redirect(url_for("command_server1", command = command_server1))
 	elif "output" in session:
 		return render_template("home.html", output = session["output"])
 	return render_template("home.html", output = "")
 
-@app.route("/test")
-def test():
-	return render_template("test.html")
 
 def run_command(command):
 	return subprocess.Popen(command, shell = True, stdout = subprocess.PIPE).stdout.read()
 
 
-@app.route("/command/<command>")
-def command_server(command):
-	output = run_command("python " + path + "/growth.py " + session["radius"] + " " + session["spacing"]+ " " + session["d1d2"]+ " " + session["b"]+ " " + session["growth"])
+@app.route("/command0/<command>")
+def command_server0(command):
+	#output = run_command("python " + path + "/growth.py " + session["radius"] + " " + session["spacing"]+ " " + session["d1d2"]+ " " + session["b"]+ " " + session["growth"])
+	#session["output"] = output 
+	#return redirect(url_for("home"))
+	return run_command("python " + path + "/growth.py " + session["radius"] + " " + session["spacing"]+ " " + session["d1d2"]+ " " + session["b"]+ " " + session["growth"])
+
+@app.route("/command1/<command>")
+def command_server1(command):
+	output = run_command("python " + path + "/test.py " + session["radius"] + " " + session["spacing"]+ " " + session["d1d2"]+ " " + session["b"]+ " " + session["growth"])
 	session["output"] = output 
 	return redirect(url_for("home"))
+	#return run_command("python" + path + "/test.py" + session["radius"] + " " + session["spacing"]+ " " + session["d1d2"]+ " " + session["b"]+ " " + session["growth"])
 
 
 @app.route("/restart")

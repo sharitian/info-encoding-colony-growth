@@ -397,10 +397,10 @@ def encoding(ID, path, r0, spacing, seeding_noise, kernel_noise, plate_shape, sc
         #plot colony
         IM = colonyTracks*0 + colony + plate*5
         IM = IM == 0
-        #if i % 10 == 0:
-        #    plt.imshow(IM, bw)
-        #    figname = path_final + str(ID) + "_" + str(i) + ".jpg"
-        #    plt.imsave(figname, IM, cmap=bw)
+        if i % 10 == 0:
+            plt.imshow(IM, bw)
+            figname = path_final + str(ID) + "_" + str(i) + ".jpg"
+            plt.imsave(figname, IM, cmap=bw)
         
         #terminate the simulation if colony stops growing     
         iterationResidual[i] = len(colony[np.where(colonyOld != colony)])
